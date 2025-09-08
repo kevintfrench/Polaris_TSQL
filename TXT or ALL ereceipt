@@ -13,9 +13,8 @@ WHERE (
         OR pr.Phone2CarrierID IN (1, 4, 10, 25, 26, 29, 44)
         OR pr.Phone3CarrierID IN (1, 4, 10, 25, 26, 29, 44)
       )
-  AND pr.EnableSMS = 1
   AND (
-        pr.DeliveryOptionID IN (1, 2, 3, 4, 5)
-        OR pr.DeliveryOptionID IS NULL
+        pr.eReceiptOptionID IN (8)
+        OR pr.eReceiptOptionID IN (100)
       )
-  AND p.OrganizationID = 3;
+  AND p.OrganizationID = 38;
