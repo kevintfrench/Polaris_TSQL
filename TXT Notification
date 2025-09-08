@@ -1,0 +1,21 @@
+SELECT pr.PatronID
+FROM Polaris.Polaris.PatronRegistration pr WITH (NOLOCK)
+INNER JOIN Polaris.Polaris.Patrons p WITH (NOLOCK)
+    ON p.PatronID = pr.PatronID
+LEFT JOIN Polaris.Polaris.SA_MobilePhoneCarriers mpc1 WITH (NOLOCK)
+    ON mpc1.CarrierID = pr.Phone1CarrierID
+LEFT JOIN Polaris.Polaris.SA_MobilePhoneCarriers mpc2 WITH (NOLOCK)
+    ON mpc2.CarrierID = pr.Phone2CarrierID
+LEFT JOIN Polaris.Polaris.SA_MobilePhoneCarriers mpc3 WITH (NOLOCK)
+    ON mpc3.CarrierID = pr.Phone3CarrierID
+WHERE (
+        pr.Phone1CarrierID IN (1, 4, 10, 25, 26, 29, 44)
+        OR pr.Phone2CarrierID IN (1, 4, 10, 25, 26, 29, 44)
+        OR pr.Phone3CarrierID IN (1, 4, 10, 25, 26, 29, 44)
+      )
+  AND (
+        (pr.EnableSMS = 1   -- additional txt
+         AND pr.DeliveryOptionID IN (8))
+        OR pr.DeliveryOptionID IN (8)
+      )
+  AND p.OrganizationID = 13;
